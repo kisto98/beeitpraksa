@@ -290,7 +290,7 @@ $databases = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = 'fJi0WOcdltKothyk2LIT7TM3dzBi_pqIsmmvvTVgQvSi6mvukkG5ZQRrL9TUnSSVbFbcXi5HpQ';
+$settings['hash_salt'] = 'SVx9KQGM8Mt_GmNCUbe5V1OH3JcSCFO2dCKVFZnhEXcjgMVrGtmmEm-2K1DXu4xgj2cMCc08jw';
 
 /**
  * Deployment identifier.
@@ -796,7 +796,7 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
 $databases['default']['default'] = array (
-  'database' => 'praksa',
+  'database' => 'beepraksa',
   'username' => 'root',
   'password' => '',
   'prefix' => '',
@@ -805,4 +805,4 @@ $databases['default']['default'] = array (
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
-$settings['config_sync_directory'] = 'sites/default/files/config_fOMSeDEZCwG48vEg_OcSYBjPp7IvQL79ahZQKgeVpr9peiABhV2GN5xrUAzdReu1GN9R_9vZ7w/sync';
+$settings['config_sync_directory'] = 'sites/default/files/config_jYfmhWqOYsfg0zc272sPqOMIUAfQta0sz4uWllyr0kqIYiYI127atJiVKzL-5OIrK_foJEKGFQ/sync';
