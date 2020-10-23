@@ -1,0 +1,14 @@
+<h4>{{ title }}</h4>
+
+<ul>
+{% for data in datas %}
+  <li>{{ data.field_movie_title_value }}</li>
+  <li>{{ data.field_description_value }}</li>
+  <h5>{{ data.field_imagename_alt }}</h5>
+<img src="{{ file_url(node.field_imagename.entity.uri.value) }}">
+<img src="{{ file_url(data.field_imagename.entity.uri.value) }}">
+
+{% endfor %}
+</ul>
+<p>aaa</p>
+
