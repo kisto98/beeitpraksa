@@ -1,0 +1,13 @@
+<h4>{{ title }}</h4>
+
+<ul>
+{% for data in datas %}
+  <li>{{ data.filmime }}</li>
+  <li>{{ data.opis}}</li>
+ <img src="{{ data.slika|file_url }}"/>
+
+
+{% endfor %}
+</ul>
+
+
