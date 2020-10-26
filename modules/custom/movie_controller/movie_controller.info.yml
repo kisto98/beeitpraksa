@@ -1,0 +1,4 @@
+name: Controller for movies
+description: Movie controller
+type: module
+core: 8.x
