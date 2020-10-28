@@ -1,12 +1,24 @@
-<h4>{{ title }}</h4>
+
+ {{ form.form_build_id }}
+ {{ form.form_token }}
+ {{ form.form_id }}
+<form method="post" path="('/movie')">
+{{ form.film_text }}
+{{ form.film_dugme }}
+</form>
+
+<ul>
+{% for trazi in trazis %}
+  <li>{{ trazi.nesto }}</li>
+{% endfor %}
+</ul>
+
 
 <ul>
 {% for data in datas %}
   <li>{{ data.filmime }}</li>
   <li>{{ data.opis}}</li>
  <img src="{{ data.slika|file_url }}"/>
-
-
 {% endfor %}
 </ul>
 

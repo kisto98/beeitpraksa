@@ -5,4 +5,11 @@ movie:
     _title: 'Our custom Movie list'
   requirements:
     _permission: 'access content'
-      
+ 
+movie.form:
+  path: '/movieform'
+  defaults:
+   _form: '\Drupal\movie_controller\Form\MovieForm'
+  requirements:
+    _permission: 'access content'
+   

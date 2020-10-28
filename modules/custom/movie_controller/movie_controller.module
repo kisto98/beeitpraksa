@@ -1,13 +1,19 @@
 <?php
 
+use Drupal\movie_controller\Form\MovieForm;
+
 /**
  * Implementing hook_theme().
  */
-function movie_controller_theme($existing, $type, $theme, $path) {
 
-  return array(
+function movie_controller_theme($existing, $type, $theme, $path) {
+  
+  $templates = [
     'movie'=> array(
-      'variables'=> array('datas'=>array())
+      'variables'=> array('datas'=>array(),'trazis'=>array(),'form' => NULL),
+      'render element' => 'form',
+         'template' =>'movie',
     )
-  );
+    ];
+    return $templates;
 }
