@@ -50,7 +50,7 @@ return new static (
 
      if($text!==null){
     
-   $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('title', $text, 'CONTAINS')->execute();
+   $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $text, 'CONTAINS')->execute();
    $node_storage1 = $this->entityTypeManager()->getStorage('node');  
    $nodes1 = $node_storage1->loadMultiple($nids1);
      
@@ -59,7 +59,6 @@ return new static (
         'nesto'  => $node1->field_movie_title->value,
     );
    }
-   $text==null;
   }
   
     return array(
