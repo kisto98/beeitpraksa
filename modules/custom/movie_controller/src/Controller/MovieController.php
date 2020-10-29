@@ -5,12 +5,9 @@ namespace Drupal\movie_controller\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use \Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ChildDefinition;
-use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormBuilderInterface;
-use Drupal\Core\Form\FormState;
-use Drupal\movie_controller\Form\MovieForm;
+
+
 
 class MovieController extends ControllerBase {
 
@@ -35,11 +32,21 @@ return new static (
  public function movie(){
   $form = \Drupal::formBuilder()->getForm('Drupal\movie_controller\Form\MovieForm');
   $text = \Drupal::request()->get('film_text');
-
+  $broj = \Drupal::request()->get('film_broj');
+  
+  if($broj==null){
   $nids=$this->entityQuery->get('node')->condition('type', 'movie')->execute();
-   $node_storage = $this->entityTypeManager()->getStorage('node');  
+  $node_storage = $this->entityTypeManager()->getStorage('node');  
+  $nodes = $node_storage->loadMultiple($nids);}
+  else {  
+    $nids=$this->entityQuery->get('node')->condition('type', 'movie')->range(0, $broj)->execute();
+    $node_storage = $this->entityTypeManager()->getStorage('node');  
    $nodes = $node_storage->loadMultiple($nids);
-     
+  }
+ //  $node_storage = $this->entityTypeManager()->getStorage('node');  
+ //  $nodes = $node_storage->loadMultiple($nids);
+  
+  
       foreach($nodes as $node) {
       $items[] = array(
       'filmime'  => $node->field_movie_title->value,

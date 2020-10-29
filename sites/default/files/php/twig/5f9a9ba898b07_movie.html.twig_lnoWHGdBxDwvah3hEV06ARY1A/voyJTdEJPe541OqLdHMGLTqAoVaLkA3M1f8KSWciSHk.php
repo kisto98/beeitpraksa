@@ -23,8 +23,8 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
         $this->blocks = [
         ];
         $this->sandbox = $this->env->getExtension('\Twig\Extension\SandboxExtension');
-        $tags = ["for" => 11];
-        $filters = ["escape" => 2, "file_url" => 21];
+        $tags = ["for" => 17];
+        $filters = ["escape" => 2, "file_url" => 27];
         $functions = [];
 
         try {
@@ -76,13 +76,25 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
         echo "
 </form>
 
-<ul>
+<form method=\"post\" path=\"('/movie')\">
 ";
         // line 11
+        echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute(($context["form"] ?? null), "film_broj", [])), "html", null, true);
+        echo "
+";
+        // line 12
+        echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute(($context["form"] ?? null), "film_range", [])), "html", null, true);
+        echo "
+</form>
+
+
+<ul>
+";
+        // line 17
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["trazis"] ?? null));
         foreach ($context['_seq'] as $context["_key"] => $context["trazi"]) {
-            // line 12
+            // line 18
             echo "  <li>";
             echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["trazi"], "nesto", [])), "html", null, true);
             echo "</li>
@@ -91,26 +103,26 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['trazi'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 14
+        // line 20
         echo "</ul>
 
 
 <ul>
 ";
-        // line 18
+        // line 24
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["datas"] ?? null));
         foreach ($context['_seq'] as $context["_key"] => $context["data"]) {
-            // line 19
+            // line 25
             echo "  <li>";
             echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["data"], "filmime", [])), "html", null, true);
             echo "</li>
   <li>";
-            // line 20
+            // line 26
             echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["data"], "opis", [])), "html", null, true);
             echo "</li>
  <img src=\"";
-            // line 21
+            // line 27
             echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->env->getExtension('Drupal\twig_tweak\TwigExtension')->fileUrl($this->sandbox->ensureToStringAllowed($this->getAttribute($context["data"], "slika", []))), "html", null, true);
             echo "\"/>
 ";
@@ -118,7 +130,7 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['data'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 23
+        // line 29
         echo "</ul>
 
 
@@ -137,7 +149,7 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
 
     public function getDebugInfo()
     {
-        return array (  122 => 23,  114 => 21,  110 => 20,  105 => 19,  101 => 18,  95 => 14,  86 => 12,  82 => 11,  75 => 7,  71 => 6,  66 => 4,  62 => 3,  58 => 2,  55 => 1,);
+        return array (  134 => 29,  126 => 27,  122 => 26,  117 => 25,  113 => 24,  107 => 20,  98 => 18,  94 => 17,  86 => 12,  82 => 11,  75 => 7,  71 => 6,  66 => 4,  62 => 3,  58 => 2,  55 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */

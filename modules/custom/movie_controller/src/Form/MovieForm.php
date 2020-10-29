@@ -2,15 +2,9 @@
 
 namespace Drupal\movie_controller\Form;
 
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use \Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\FormBase;
-use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Messenger;
-use Drupal\Core\Messenger\Messenger as MessengerMessenger;
-use MessengerTrait;
+
 
 class MovieForm extends FormBase {
  
@@ -27,8 +21,21 @@ class MovieForm extends FormBase {
        
         $form['film_dugme'] = array(
           '#type' => 'submit',
-          '#value' =>'perform_finding',
-        );        
+          '#value' =>'Pronadji',
+          '#submit' => array('film_dugme_submit'),
+        );
+
+        $form['film_broj'] = array(
+          '#type' => 'textfield',
+          '#title' =>$this->t('Ogranici broj prikaza po stranici'),
+          '#default_value' => \Drupal::request()->get('film_broj')
+        );
+        $form['film_range'] = array(
+          '#type' => 'submit',
+          '#value' =>'Ogranici',
+          '#submit' => array('film_range_submit'),
+        );
+        
         return $form;
       }
          

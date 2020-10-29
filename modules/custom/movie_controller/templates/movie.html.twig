@@ -7,6 +7,12 @@
 {{ form.film_dugme }}
 </form>
 
+<form method="post" path="('/movie')">
+{{ form.film_broj }}
+{{ form.film_range }}
+</form>
+
+
 <ul>
 {% for trazi in trazis %}
   <li>{{ trazi.nesto }}</li>
