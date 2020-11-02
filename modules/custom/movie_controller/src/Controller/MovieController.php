@@ -7,6 +7,7 @@
   use \Drupal\Core\Entity\EntityTypeManagerInterface;
   use Drupal\Core\Form\FormBuilderInterface;
   use Drupal\taxonomy\Entity\Term;
+  use Doctrine\ORM\Tools\Pagination\Paginator;
 
   class MovieController extends ControllerBase {
 
@@ -34,17 +35,19 @@ return new static (
  // $broj = \Drupal::request()->get('film_broj');
   $config = \Drupal::config('movie.settings');
   $broj =$config->get('film_broj');
-
-  $nids=$this->entityQuery->get('node')
+$nids=$this->entityQuery->get('node')
   ->condition('type', 'movie')
   ->sort('created', 'DESC')
-  ->range(0,$broj)
+  //->range(0,$broj)
+  ->pager($broj)
   ->execute();
-  $node_storage = $this->entityTypeManager()->getStorage('node');  
+
+
+
+$node_storage = $this->entityTypeManager()->getStorage('node');  
   $nodes = $node_storage->loadMultiple($nids);
-  
- 
-  foreach($nodes as $node) {
+ # prikaz filmova sa svim ostalim 
+ foreach($nodes as $node) {
     $tids = $node->field_movie_type->target_id;
 $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
  
@@ -55,15 +58,11 @@ $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
      'type'=>$node=$terms->name->value,
       );  
 }
-
-
 $tid=$this->entityQuery->get('taxonomy_term')->execute();
 $trmes = $this->entityTypeManager()->getStorage('taxonomy_term')->loadMultiple($tid);
-
-
+# izlistava sve taksonomije 
 foreach($trmes as $trm) {
-
- $niz[] = array(
+$niz[] = array(
   'tip'  => $trm->label()
     );  
 }
@@ -89,7 +88,10 @@ if($tipovi!==null){
         'nesto'  => $node1->field_movie_title->value,
     );
   }}}
-
+  $form['pager'] = array(
+    '#type' => 'pager',
+  );
+  $path = \Drupal::service('path.current')->getPath();
 
    return array(
     '#datas'=> $items, 
@@ -97,9 +99,11 @@ if($tipovi!==null){
     '#theme'=>'movie',
     '#trazis'=> $items1,
     '#drugi'=>$niz,
+    '#path'  => $path,
+    '#form'=>$form
      );
   
- // $path = \Drupal::service('path.current')->getPath();
+
  }  
 }
 

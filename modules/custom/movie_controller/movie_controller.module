@@ -10,12 +10,12 @@ function movie_controller_theme($existing, $type, $theme, $path) {
   
   $templates = [
     'movie'=> array(
-      'variables'=> array('datas'=>array(),'trazis'=>array(),'drugi'=>array(),'form' => NULL),
+      'variables'=> array('datas'=>array(),'trazis'=>array(),'drugi'=>array(),'form' => NULL,),
       'render element' => 'form',
          'template' =>'movie',
-         '#pager' => [
-          '#type' => 'pager',
-          '#path'=>'path',
+         'pager' => [
+          'type' => 'pager',
+        
           
         ],
     )
