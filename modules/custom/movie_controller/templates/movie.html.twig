@@ -1,17 +1,17 @@
 
- {{ form.form_build_id }}
- {{ form.form_token }}
- {{ form.form_id }}
-<form method="post" path="('/movie')">
-{{ form.film_text }}
-{{ form.film_dugme }}
-</form>
 
-<form method="post" path="('/movie')">
-{{ form.film_broj }}
-{{ form.film_range }}
-</form>
+<form method="POST" path="('/movie')">
+<input type="text" name="search_movie">
+<button name="submit"> </button>
 
+<select name="selected">
+     <option value="" {{ selected }}></option> 
+        {% set selected = '' %}
+    {% for d in drugi %}
+          <option value="{{d.tip}}">{{d.tip}}</option>
+    {% endfor %}
+</select>
+</form>
 
 <ul>
 {% for trazi in trazis %}
@@ -24,8 +24,10 @@
 {% for data in datas %}
   <li>{{ data.filmime }}</li>
   <li>{{ data.opis}}</li>
- <img src="{{ data.slika|file_url }}"/>
+ <li><img src="{{ data.slika|file_url }}"/></li>
+  <li>{{ data.type }}</li>
 {% endfor %}
+
 </ul>
 
 

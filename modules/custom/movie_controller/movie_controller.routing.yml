@@ -9,7 +9,7 @@ movie:
 movie.form:
   path: '/movieform'
   defaults:
-   _form: '\Drupal\movie_controller\Form\MovieForm'
+   _form: '\Drupal\movie_controller\Form\MovieSettingsForm'
   requirements:
     _permission: 'access content'
    
