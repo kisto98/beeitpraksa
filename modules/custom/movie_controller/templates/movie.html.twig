@@ -1,21 +1,21 @@
 
 
-<form method="POST" path="('/movie')">
+<form method="POST" path="('/search')">
 <input type="text" name="search_movie">
 <button name="submit"> </button>
 
 <select name="selected">
      <option value="" {{ selected }}></option> 
         {% set selected = '' %}
-    {% for d in drugi %}
-          <option value="{{d.tip}}">{{d.tip}}</option>
+    {% for type in types %}
+          <option value="{{type.zanr}}">{{type.zanr}}</option>
     {% endfor %}
 </select>
 </form>
 
 <ul>
-{% for trazi in trazis %}
-  <li>{{ trazi.nesto }}</li>
+{% for find in finds %}
+  <li>{{ find.search }}</li>
 {% endfor %}
 </ul>
 

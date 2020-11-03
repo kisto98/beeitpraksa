@@ -54,7 +54,7 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
         // line 1
         echo "
 
-<form method=\"POST\" path=\"('/movie')\">
+<form method=\"POST\" path=\"('/search')\">
 <input type=\"text\" name=\"search_movie\">
 <button name=\"submit\"> </button>
 
@@ -69,18 +69,18 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
         // line 10
         echo "    ";
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(($context["drugi"] ?? null));
-        foreach ($context['_seq'] as $context["_key"] => $context["d"]) {
+        $context['_seq'] = twig_ensure_traversable(($context["types"] ?? null));
+        foreach ($context['_seq'] as $context["_key"] => $context["type"]) {
             // line 11
             echo "          <option value=\"";
-            echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["d"], "tip", [])), "html", null, true);
+            echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["type"], "zanr", [])), "html", null, true);
             echo "\">";
-            echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["d"], "tip", [])), "html", null, true);
+            echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["type"], "zanr", [])), "html", null, true);
             echo "</option>
     ";
         }
         $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['d'], $context['_parent'], $context['loop']);
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['type'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
         // line 13
         echo "</select>
@@ -90,16 +90,16 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
 ";
         // line 17
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(($context["trazis"] ?? null));
-        foreach ($context['_seq'] as $context["_key"] => $context["trazi"]) {
+        $context['_seq'] = twig_ensure_traversable(($context["finds"] ?? null));
+        foreach ($context['_seq'] as $context["_key"] => $context["find"]) {
             // line 18
             echo "  <li>";
-            echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["trazi"], "nesto", [])), "html", null, true);
+            echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["find"], "search", [])), "html", null, true);
             echo "</li>
 ";
         }
         $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['trazi'], $context['_parent'], $context['loop']);
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['find'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
         // line 20
         echo "</ul>
