@@ -73,13 +73,26 @@ public function search()
    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->execute();
    $node_storage1 = $this->entityTypeManager()->getStorage('node');  
    $nodes1 = $node_storage1->loadMultiple($nids1);
-   if($find!==null&&$find!==""){
+   
+   if(!empty($find)){
    foreach($nodes1 as $node1) {
       $items1[] = array(
         'search'  => $node1->field_movie_title->value,
     );
-  }}
-if($zanr!==null){
+  }
+}
+else if(!empty($zanr)&&!empty($find)){
+  foreach($nodes1 as $node1) {
+    $tids = $node1->field_movie_type->target_id;
+    $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
+    if($zanr==$terms->name->value){
+    $items1[] = array(
+      'search'  => $node1->field_movie_title->value,
+  );
+  }
+ }
+}
+else if(!empty($zanr)){
     foreach($nodes1 as $node1) {
       $tids = $node1->field_movie_type->target_id;
       $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
@@ -88,19 +101,10 @@ if($zanr!==null){
         'search'  => $node1->field_movie_title->value,
     );
   }
+ }
 }
-}
-if($zanr!==null&&$find!==null&&$find!==""){
-  foreach($nodes1 as $node1) {
-    $tids = $node1->field_movie_type->target_id;
-    $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
-    if($zanr==$terms->name->value){
-    $items1[] = array(
-      'search'  => $node1->field_movie_title->value,
-  );
-}
-}
-}
+
+
 return $items1;
 }
   
