@@ -32,15 +32,16 @@ return new static (
 public function displayMovies($items){
   $config = \Drupal::config('movie.settings');
   $broj =$config->get('film_broj');
-$nids=$this->entityQuery->get('node')
+  
+  $nids=$this->entityQuery->get('node')
   ->condition('type', 'movie')
   ->sort('created', 'DESC')
   ->pager($broj)
   ->execute();
-$node_storage = $this->entityTypeManager()->getStorage('node');  
+  $node_storage = $this->entityTypeManager()->getStorage('node');  
   $nodes = $node_storage->loadMultiple($nids);
 
- foreach($nodes as $node) {
+foreach($nodes as $node) {
     $tids = $node->field_movie_type->target_id;
 $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
     $items[] = array(
@@ -51,6 +52,56 @@ $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
       );  
 }
 return $items;
+}
+
+
+public function getIds(){
+ 
+  $find = \Drupal::request()->request->get('search_movie');
+  $zanr = \Drupal::request()->request->get('selected');
+  
+  if(!empty($find)){
+    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->execute();
+  }
+  else if(empty($find) && !empty($zanr)){
+    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->execute();
+  }
+else {
+      $nids1=array(1,1,1); #mora imate vrednost ako nema vraca 0 i onda nodes ucitava sve na prvom loadu
+  }
+return $nids1; 
+} 
+
+public function loadIds(){
+  $nids1 = $this->getIds($this->nids1);
+  $nodes1= $this->entityTypeManager()->getStorage('node')->loadMultiple($nids1);
+ 
+  return $nodes1; 
+ }
+
+public function search($items1){
+  $zanr = \Drupal::request()->request->get('selected');
+  $nodes1 = $this->loadIds($this->nodes1);
+  
+  if($zanr==null){
+    foreach($nodes1 as $node1) {
+  $items1[] = array(
+    'search'  => $node1->field_movie_title->value,
+    );
+  }
+}
+else {
+  foreach($nodes1 as $node1) {
+    $tids = $node1->field_movie_type->target_id;
+    $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
+    if($zanr==$terms->name->value){
+    $items1[] = array(
+      'search'  => $node1->field_movie_title->value,
+     );
+   }
+  }
+ }
+return $items1;
 }
 
 public function getType()
@@ -65,58 +116,13 @@ $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->loadMultiple($
   return $movietypes;
 }
 
-public function search()
-{
-  $zanr = \Drupal::request()->request->get('selected');
-  $find = \Drupal::request()->request->get('search_movie');
+public function movie(){
 
-   $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->execute();
-   $node_storage1 = $this->entityTypeManager()->getStorage('node');  
-   $nodes1 = $node_storage1->loadMultiple($nids1);
-   
-   if(!empty($find)){
-   foreach($nodes1 as $node1) {
-      $items1[] = array(
-        'search'  => $node1->field_movie_title->value,
-    );
-  }
-}
-else if(!empty($zanr)&&!empty($find)){
-  foreach($nodes1 as $node1) {
-    $tids = $node1->field_movie_type->target_id;
-    $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
-    if($zanr==$terms->name->value){
-    $items1[] = array(
-      'search'  => $node1->field_movie_title->value,
-  );
-  }
- }
-}
-else if(!empty($zanr)){
-    foreach($nodes1 as $node1) {
-      $tids = $node1->field_movie_type->target_id;
-      $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
-      if($zanr==$terms->name->value){
-      $items1[] = array(
-        'search'  => $node1->field_movie_title->value,
-    );
-  }
- }
-}
-
-
-return $items1;
-}
-  
- public function movie(){
- // $form = \Drupal::formBuilder()->getForm('Drupal\movie_controller\Form\MovieSettingsForm');
- // $text = \Drupal::request()->get('film_text');
- // $broj = \Drupal::request()->get('film_broj');
-
-$items = $this->displayMovies($this->items);
+ $this->getIds($this->nids1);
+ $this->loadIds($this->nids1);
+ $items1 = $this->search($this->items1);
+ $items = $this->displayMovies($this->items);
 $movietypes = $this->getType($this->movietypes);
-$items1 = $this->search($this->items1);
-
 
  $form['pager'] = array(
     '#type' => 'pager',
