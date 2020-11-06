@@ -2,3 +2,5 @@ name: Controller for movies
 description: Movie controller
 type: module
 core: 8.x
+'interface translation project': movie_controller
+'interface translation server pattern': 'modules/custom/movie_controller/translations/movie_controller.sr.po'

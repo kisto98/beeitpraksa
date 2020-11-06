@@ -1,13 +1,28 @@
-<h4>{{ title }}</h4>
+
+
+<form method="POST" path="('/getIds')">
+<input type="text" name="search_movie">
+<button name="submit"> </button>
+
+<select name="selected">
+     <option value="" {{ selected }}></option> 
+        {% set selected = '' %}
+    {% for type in types %}
+          <option value="{{type.id}}">{{type.zanr}}</option>
+    {% endfor %}
+</select>
+</form>
 
 <ul>
-{% for data in datas %}
-  <li>{{ data.filmime }}</li>
-  <li>{{ data.opis}}</li>
- <img src="{{ data.slika|file_url }}"/>
-
-
+{% for find in finds %}
+  <li>{{ find.filmime }}</li>
+  <li>{{ find.opis}}</li>
+ <li><img src="{{ find.slika|file_url }}"/></li>
+  <li>{{ find.type }}</li>
 {% endfor %}
+
 </ul>
 
+
+{{ form.pager }}
 
