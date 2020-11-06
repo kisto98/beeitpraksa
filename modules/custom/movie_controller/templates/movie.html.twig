@@ -15,20 +15,14 @@
 
 <ul>
 {% for find in finds %}
-  <li>{{ find.search }}</li>
-{% endfor %}
-</ul>
-
-
-<ul>
-{% for data in datas %}
-  <li>{{ data.filmime }}</li>
-  <li>{{ data.opis}}</li>
- <li><img src="{{ data.slika|file_url }}"/></li>
-  <li>{{ data.type }}</li>
+  <li>{{ find.filmime }}</li>
+  <li>{{ find.opis}}</li>
+ <li><img src="{{ find.slika|file_url }}"/></li>
+  <li>{{ find.type }}</li>
 {% endfor %}
 
 </ul>
+
 
 {{ form.pager }}
 

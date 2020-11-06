@@ -30,48 +30,28 @@ return new static (
 );
 }
   
-public function displayMovies($items){
-  $config = \Drupal::config('movie.settings');
-  $broj =$config->get('film_broj');
-  
-  $nids=$this->entityQuery->get('node')
-  ->condition('type', 'movie')
-  ->sort('created', 'DESC')
-  ->pager($broj)
-  ->execute();
-  $node_storage = $this->entityTypeManager()->getStorage('node');  
-  $nodes = $node_storage->loadMultiple($nids);
-
-foreach($nodes as $node) {
-    $tids = $node->field_movie_type->target_id;
-$terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
-    $items[] = array(
-    'filmime'  => $node->field_movie_title->value,
-      'opis' => $node->field_description->value,
-     'slika'=> $node->field_imagename->entity->getFileUri(),
-     'type'=>$node=$terms->name->value,
-      );  
-}
-return $items;
-}
-
-
 public function getIds(){
  
   $find = \Drupal::request()->request->get('search_movie');
   $zanrid = \Drupal::request()->request->get('selected');
+  $config = \Drupal::config('movie.settings');
+  $broj =$config->get('film_broj');
   
   if(!empty($find) && empty($zanrid)){
-    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->execute();
-  }
-  else if(empty($find) && !empty($zanrid)){
-    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_type', $zanrid)->execute();
+    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->sort('created', 'DESC')
+    ->pager($broj)->execute();
   }
   else if(!empty($find) && !empty($zanrid)){
-    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->condition('field_movie_type', $zanrid)->execute();
+    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->condition('field_movie_type', $zanrid)->sort('created', 'DESC')
+    ->pager($broj)->execute();
+  }
+  else if(empty($find) && !empty($zanrid)){
+    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_type', $zanrid)->sort('created', 'DESC')
+    ->pager($broj)->execute();
   }
 else {
-      $nids1=array(); #mora imate vrednost ako nema vraca 0 i onda nodes ucitava sve na prvom loadu
+  $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->sort('created', 'DESC')
+  ->pager($broj)->execute();
   }
 return $nids1; 
 } 
@@ -83,14 +63,19 @@ public function loadIds(){
   return $nodes1; 
  }
 
-public function search(){
+public function displayMovies(){
   $nodes1 = $this->loadIds($this->nodes1);
-  
-  foreach($nodes1 as $node1) {
-  $items1[] = array(
-    'search'  => $node1->field_movie_title->value,
-    );
+    foreach($nodes1 as $node1) {
+      $tids = $node1->field_movie_type->target_id;
+  $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
+      $items1[] = array(
+      'filmime'  => $node1->field_movie_title->value,
+        'opis' => $node1->field_description->value,
+       'slika'=> $node1->field_imagename->entity->getFileUri(),
+       'type'=>$node1=$terms->name->value,
+        );  
   }
+ 
 return $items1;
 }
 
@@ -109,12 +94,10 @@ public function getType()
 }
 
 public function movie(){
-
+$movietypes = $this->getType($this->movietypes);
  $this->getIds($this->nids1);
  $this->loadIds($this->nids1);
- $items1 = $this->search($this->items1);
- $items = $this->displayMovies($this->items);
-$movietypes = $this->getType($this->movietypes);
+ $items1 = $this->displayMovies($this->items1);
 
  $form['pager'] = array(
     '#type' => 'pager',
@@ -122,7 +105,6 @@ $movietypes = $this->getType($this->movietypes);
   $path = \Drupal::service('path.current')->getPath();
 
    return array(
-    '#datas'=> $items,
     '#title'=> 'Lista filmova',
     '#theme'=>'movie',
     '#finds'=> $items1,
