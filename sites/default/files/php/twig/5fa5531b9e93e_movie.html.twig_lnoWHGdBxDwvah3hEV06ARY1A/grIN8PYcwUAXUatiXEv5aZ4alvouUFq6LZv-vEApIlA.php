@@ -73,7 +73,7 @@ class __TwigTemplate_28e315628f16f66495c5df21f76b683ea6b82472461bcd2e3300e51f7f1
         foreach ($context['_seq'] as $context["_key"] => $context["type"]) {
             // line 11
             echo "          <option value=\"";
-            echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["type"], "zanr", [])), "html", null, true);
+            echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["type"], "id", [])), "html", null, true);
             echo "\">";
             echo $this->env->getExtension('Drupal\Core\Template\TwigExtension')->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed($this->getAttribute($context["type"], "zanr", [])), "html", null, true);
             echo "</option>

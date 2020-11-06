@@ -8,6 +8,7 @@
   use Drupal\Core\Form\FormBuilderInterface;
   use Drupal\taxonomy\Entity\Term;
   use Doctrine\ORM\Tools\Pagination\Paginator;
+  use Drupal\taxonomy;
 
   class MovieController extends ControllerBase {
 
@@ -58,16 +59,19 @@ return $items;
 public function getIds(){
  
   $find = \Drupal::request()->request->get('search_movie');
-  $zanr = \Drupal::request()->request->get('selected');
+  $zanrid = \Drupal::request()->request->get('selected');
   
-  if(!empty($find)){
+  if(!empty($find) && empty($zanrid)){
     $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->execute();
   }
-  else if(empty($find) && !empty($zanr)){
-    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->execute();
+  else if(empty($find) && !empty($zanrid)){
+    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_type', $zanrid)->execute();
+  }
+  else if(!empty($find) && !empty($zanrid)){
+    $nids1=$this->entityQuery->get('node')->condition('type', 'movie')->condition('field_movie_title', $find, 'CONTAINS')->condition('field_movie_type', $zanrid)->execute();
   }
 else {
-      $nids1=array(1,1,1); #mora imate vrednost ako nema vraca 0 i onda nodes ucitava sve na prvom loadu
+      $nids1=array(); #mora imate vrednost ako nema vraca 0 i onda nodes ucitava sve na prvom loadu
   }
 return $nids1; 
 } 
@@ -79,38 +83,26 @@ public function loadIds(){
   return $nodes1; 
  }
 
-public function search($items1){
-  $zanr = \Drupal::request()->request->get('selected');
+public function search(){
   $nodes1 = $this->loadIds($this->nodes1);
   
-  if($zanr==null){
-    foreach($nodes1 as $node1) {
+  foreach($nodes1 as $node1) {
   $items1[] = array(
     'search'  => $node1->field_movie_title->value,
     );
   }
-}
-else {
-  foreach($nodes1 as $node1) {
-    $tids = $node1->field_movie_type->target_id;
-    $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->load($tids);
-    if($zanr==$terms->name->value){
-    $items1[] = array(
-      'search'  => $node1->field_movie_title->value,
-     );
-   }
-  }
- }
 return $items1;
 }
 
 public function getType()
 {
   $tids =$this->entityQuery->get('taxonomy_term')->execute();
-$terms = $this->entityTypeManager()->getStorage('taxonomy_term')->loadMultiple($tids);
+  $terms = $this->entityTypeManager()->getStorage('taxonomy_term')->loadMultiple($tids);
+
   foreach($terms as $term) {
   $movietypes[] = array(
-    'zanr'  => $term->label()
+    'zanr'  => $term->name->value, //label()
+    'id'=>$term->tid->value
       );  
   }
   return $movietypes;
